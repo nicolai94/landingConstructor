@@ -1,0 +1,31 @@
+basePath: /api/v1
+host: localhost:8080
+info:
+  contact:
+    email: support@swagger.io
+    name: API Support
+    url: http://www.swagger.io/support
+  description: This is a sample server for a Gin Swagger example.
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  termsOfService: http://swagger.io/terms/
+  title: Gin Swagger Example API
+  version: "1.0"
+paths:
+  /hello:
+    get:
+      consumes:
+      - application/json
+      description: Возвращает простое приветствие
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Привет, мир!
+          schema:
+            type: string
+      summary: Возвращает приветствие
+      tags:
+      - example
+swagger: "2.0"
