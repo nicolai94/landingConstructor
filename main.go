@@ -3,8 +3,8 @@ package main
 import (
 	"fmt"
 	"github.com/joho/godotenv"
+	_ "github.com/nicolai94/landingConstructor/docs"
 	"github.com/pressly/goose/v3"
-	_ "github.com/swaggo/gin-swagger/landingConstructor/docs"
 	"landingConstructor/app/routers"
 	"landingConstructor/config"
 	"os"
