@@ -52,10 +52,6 @@ func (p PwaRepositoryImpl) GetPwaById(id string) (dao.Pwa, error) {
 }
 
 func PwaRepositoryInit(db *gorm.DB) *PwaRepositoryImpl {
-	//if err := db.AutoMigrate(&dao.Pwa{}, &dao.PreLanding{}); err != nil {
-	//	log.Error("Got an error when connect to database. Error: ", err)
-	//}
-	//db.Debug().AutoMigrate(&dao.Pwa{}, &dao.PreLanding{})
 	return &PwaRepositoryImpl{
 		db: db,
 	}

@@ -3,27 +3,19 @@ package main
 import (
 	"fmt"
 	"github.com/joho/godotenv"
-	_ "github.com/nicolai94/landingConstructor/docs"
 	"github.com/pressly/goose/v3"
 	"landingConstructor/app/routers"
 	"landingConstructor/config"
+	_ "landingConstructor/docs"
 	"os"
 )
 
-// @title Gin Swagger Example API
+// @title Gin Swagger Landing Constructor
 // @version 1.0
-// @description This is a sample server for a Gin Swagger example.
-// @termsOfService http://swagger.io/terms/
-
-// @contact.name API Support
-// @contact.url http://www.swagger.io/support
-// @contact.email support@swagger.io
-
-// @license.name Apache 2.0
-// @license.url http://www.apache.org/licenses/LICENSE-2.0.html
+// @description App for landing constructor.
 
 // @host localhost:8080
-// @BasePath /api/v1
+// @BasePath /api
 func main() {
 	if err := godotenv.Load(); err != nil {
 		fmt.Println("Ошибка загрузки .env файла:", err)
@@ -31,12 +23,12 @@ func main() {
 	init := config.InitDependencies()
 	db := config.ConnectToDB()
 
-	sqlDB, err := db.DB()
-	if err != nil {
-		panic(err)
+	sqlDB, dbErr := db.DB()
+	if dbErr != nil {
+		panic(dbErr)
 	}
-	if err := goose.Up(sqlDB, "migrations"); err != nil {
-		panic(err)
+	if migrationErr := goose.Up(sqlDB, "migrations"); migrationErr != nil {
+		panic(migrationErr)
 	}
 	app := routers.Init(init)
 

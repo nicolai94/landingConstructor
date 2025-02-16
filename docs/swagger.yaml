@@ -1,31 +1,68 @@
-basePath: /api/v1
+basePath: /api
+definitions:
+  dao.PwaCreateRequest:
+    properties:
+      iconUrl:
+        type: string
+      name:
+        type: string
+      type:
+        $ref: '#/definitions/enums.TypeCampaign'
+    type: object
+  enums.TypeCampaign:
+    enum:
+    - 0
+    - 1
+    - 2
+    type: integer
+    x-enum-varnames:
+    - GoogleBlue
+    - GoogleGreen
+    - AppleStore
 host: localhost:8080
 info:
-  contact:
-    email: support@swagger.io
-    name: API Support
-    url: http://www.swagger.io/support
-  description: This is a sample server for a Gin Swagger example.
-  license:
-    name: Apache 2.0
-    url: http://www.apache.org/licenses/LICENSE-2.0.html
-  termsOfService: http://swagger.io/terms/
-  title: Gin Swagger Example API
+  contact: {}
+  description: App for landing constructor.
+  title: Gin Swagger Landing Constructor
   version: "1.0"
 paths:
-  /hello:
+  /common:
     get:
       consumes:
       - application/json
-      description: Возвращает простое приветствие
+      description: Pinging for server and app
       produces:
       - application/json
       responses:
         "200":
-          description: Привет, мир!
+          description: pong
           schema:
             type: string
-      summary: Возвращает приветствие
+      summary: Router for ping
       tags:
-      - example
+      - Common
+  /pwa:
+    post:
+      consumes:
+      - application/json
+      description: Создает новый PWA на основе переданных данных
+      parameters:
+      - description: Данные для создания PWA
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/dao.PwaCreateRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Успешное создание PWA
+        "400":
+          description: Неверный формат запроса
+        "500":
+          description: Ошибка сервера при создании PWA
+      summary: Создание нового PWA
+      tags:
+      - PWA
 swagger: "2.0"

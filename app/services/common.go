@@ -12,14 +12,14 @@ type CommonService interface {
 type CommonServiceImpl struct {
 }
 
-// HelloHandler обрабатывает запрос на /hello
-// @Summary Возвращает приветствие
-// @Description Возвращает простое приветствие
-// @Tags example
+// PingHamdler обрабатывает запрос на ping
+// @Summary Router for ping
+// @Description Pinging for server and app
+// @Tags Common
 // @Accept json
 // @Produce json
-// @Success 200 {string} string "Привет, мир!"
-// @Router /hello [get]
+// @Success 200 {string} string "pong"
+// @Router /common [get]
 func (u CommonServiceImpl) Ping(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"message": "pong"})
 	return

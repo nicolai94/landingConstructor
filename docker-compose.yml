@@ -12,5 +12,25 @@ services:
       timeout: 10s
       retries: 10
 
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: go_app
+    depends_on:
+      constructor_db:
+        condition: service_healthy
+    env_file:
+      - .env
+    environment:
+      - GOOSE_DRIVER=postgres
+      - GOOSE_DBSTRING=postgres://{POSTGRES_USER}:{POSTGRES_PASSWORD}@{POSTGRES_HOST}:5432/{POSTGRES_DB}?sslmode=disable
+    volumes:
+      - ./migrations:/app/migrations
+      - ./.env:/app/.env
+    ports:
+      - "8080:8080"
+
+
 volumes:
   constructor_db:

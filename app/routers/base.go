@@ -11,7 +11,6 @@ import (
 func Init(init *config.Initialization) *gin.Engine {
 
 	router := gin.New()
-	router.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 
 	router.Use(cors.Default())
 
@@ -19,7 +18,8 @@ func Init(init *config.Initialization) *gin.Engine {
 	router.Use(gin.Recovery())
 	router.Static("/uploads", "./uploads")
 
-	api := router.Group("/api")
+	api := router.Group("/api/v1")
+	api.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 	api.GET("/common", init.CommonCtrl.Ping)
 	{
 		pwa := api.Group("/pwa")

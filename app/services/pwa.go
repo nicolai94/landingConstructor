@@ -26,6 +26,17 @@ type PwaServiceImpl struct {
 	pwaRepository repositories.PwaRepository
 }
 
+// CreatePWA создает новый PWA
+// @Summary Создание нового PWA
+// @Description Создает новый PWA на основе переданных данных
+// @Tags PWA
+// @Accept json
+// @Produce json
+// @Param body body dao.PwaCreateRequest true "Данные для создания PWA"
+// @Success 200  "Успешное создание PWA"
+// @Failure 400  "Неверный формат запроса"
+// @Failure 500  "Ошибка сервера при создании PWA"
+// @Router /pwa [post]
 func (p PwaServiceImpl) CreatePWA(c *gin.Context) {
 	var bodyRequest dao.PwaCreateRequest
 

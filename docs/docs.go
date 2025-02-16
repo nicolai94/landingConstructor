@@ -9,24 +9,15 @@ const docTemplate = `{
     "info": {
         "description": "{{escape .Description}}",
         "title": "{{.Title}}",
-        "termsOfService": "http://swagger.io/terms/",
-        "contact": {
-            "name": "API Support",
-            "url": "http://www.swagger.io/support",
-            "email": "support@swagger.io"
-        },
-        "license": {
-            "name": "Apache 2.0",
-            "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
-        },
+        "contact": {},
         "version": "{{.Version}}"
     },
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
-        "/hello": {
+        "/common": {
             "get": {
-                "description": "Возвращает простое приветствие",
+                "description": "Pinging for server and app",
                 "consumes": [
                     "application/json"
                 ],
@@ -34,18 +25,84 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "example"
+                    "Common"
                 ],
-                "summary": "Возвращает приветствие",
+                "summary": "Router for ping",
                 "responses": {
                     "200": {
-                        "description": "Привет, мир!",
+                        "description": "pong",
                         "schema": {
                             "type": "string"
                         }
                     }
                 }
             }
+        },
+        "/pwa": {
+            "post": {
+                "description": "Создает новый PWA на основе переданных данных",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "PWA"
+                ],
+                "summary": "Создание нового PWA",
+                "parameters": [
+                    {
+                        "description": "Данные для создания PWA",
+                        "name": "body",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/dao.PwaCreateRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Успешное создание PWA"
+                    },
+                    "400": {
+                        "description": "Неверный формат запроса"
+                    },
+                    "500": {
+                        "description": "Ошибка сервера при создании PWA"
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "dao.PwaCreateRequest": {
+            "type": "object",
+            "properties": {
+                "iconUrl": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "type": {
+                    "$ref": "#/definitions/enums.TypeCampaign"
+                }
+            }
+        },
+        "enums.TypeCampaign": {
+            "type": "integer",
+            "enum": [
+                0,
+                1,
+                2
+            ],
+            "x-enum-varnames": [
+                "GoogleBlue",
+                "GoogleGreen",
+                "AppleStore"
+            ]
         }
     }
 }`
@@ -54,10 +111,10 @@ const docTemplate = `{
 var SwaggerInfo = &swag.Spec{
 	Version:          "1.0",
 	Host:             "localhost:8080",
-	BasePath:         "/api/v1",
+	BasePath:         "/api",
 	Schemes:          []string{},
-	Title:            "Gin Swagger Example API",
-	Description:      "This is a sample server for a Gin Swagger example.",
+	Title:            "Gin Swagger Landing Constructor",
+	Description:      "App for landing constructor.",
 	InfoInstanceName: "swagger",
 	SwaggerTemplate:  docTemplate,
 	LeftDelim:        "{{",
